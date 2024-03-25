@@ -1,4 +1,4 @@
-const connection = require('../../config/mysql.js');
+const connection = require('../../config/mysql');
 class Role {
     constructor(roleData) {
         this.id = roleData.id;

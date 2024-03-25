@@ -14,7 +14,7 @@ connection.connect(function(err) {
         console.error('Không kết nối được Database:', err);
         return;
     }
-    console.log('Kết nối thành công đến MySQL server');
+    
 });
 
 module.exports = connection;
