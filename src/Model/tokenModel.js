@@ -1,4 +1,4 @@
-const connection = require('../../config/mysql.js');
+const connection = require('../../config/mysql');
 
 class Token {
     constructor(token, created_at, user_id) {
