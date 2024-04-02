@@ -21,7 +21,7 @@ const login = async (req, res) => {
         }
 
         // Tạo JWT token
-        const token = jwt.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SERCRET, { expiresIn: process.env.ExpiresIn });
+        const token = jwt.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ExpiresIn });
         res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.ExpiresIn });
         if (req.accepts('html')) {
             // Nếu là yêu cầu HTML, thực hiện redirect

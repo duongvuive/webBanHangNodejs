@@ -5,7 +5,6 @@ require('dotenv').config();
 const register = async (req, res) => {
     const { email, password } = req.body;
     try {
-        console.log('email :',email);
         const emailExists = await User.existingEmail(email);
         if (emailExists) {
             return res.status(400).json({ error: 'Email đã tồn tại' });
