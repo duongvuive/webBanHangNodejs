@@ -1,4 +1,4 @@
-const connection = require('../../config/mysql');
+const connection = require('../config/mysql');
 class Role {
     constructor(roleData) {
         this.id = roleData.id;
@@ -34,6 +34,16 @@ class Role {
             throw error;
         }
     }
+    static async findNameRole(roleId){
+        try {
+            const [result]= await connection.promise().query('SELECT Name FROM role WHERE id = ?', [roleId]);
+            return result;
+        } catch(error) {
+            console.error('Lỗi khi tìm kiếm role:', error);
+            throw error;
+        }
+    }
+    
 }
 
 module.exports = Role;

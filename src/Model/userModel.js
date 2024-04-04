@@ -1,4 +1,5 @@
 const connection = require('../config/mysql');
+const bcrypt = require('bcrypt');
 class User {
     constructor(userData) {
         this.id = userData.id;
@@ -58,9 +59,10 @@ class User {
     }
 
     // Phương thức để reset mật khẩu của user trong cơ sở dữ liệu
-    static async resetPassword(email, newPassword) {
+    static async resetPassword(id, newPassword) {
         try {
-            const [result] = await connection.promise().query('UPDATE user SET password = ? WHERE email = ?', [newPassword, email]);
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            const [result] = await connection.promise().query('UPDATE user SET password = ? WHERE id = ?', [hashedPassword, id]);
             return result.affectedRows;
         } catch (error) {
             console.error('Lỗi khi reset mật khẩu:', error);
@@ -91,6 +93,14 @@ class User {
             throw error;
         }
     }
+    // static async getUserByID(id) {
+    //     try {
+    //         const [rows] = await connection.promise().query('SELECT * FROM user WHERE id = ?', [id]);
+    //         return rows.length > 0 ? rows[0] : null; // Trả về dòng dữ liệu đầu tiên nếu tồn tại email, ngược lại trả về null
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
     
 }
 
