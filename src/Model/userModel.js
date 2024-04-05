@@ -50,13 +50,23 @@ class User {
     // Phương thức để xóa user từ cơ sở dữ liệu
     static async deleteUser(userId) {
         try {
-            const [result] = await connection.promise().query('DELETE FROM user WHERE id = ?', [userId]);
+            // Xóa dữ liệu từ bảng tokens
+            const sqlDeleteTokens = 'DELETE FROM tokens WHERE user_id = ?';
+            await connection.promise().query(sqlDeleteTokens, [userId]);
+    
+            // Xóa dữ liệu từ bảng user
+            const sqlDeleteUser = 'DELETE FROM user WHERE id = ?';
+            const [result] = await connection.promise().query(sqlDeleteUser, [userId]);
+    
             return result.affectedRows;
         } catch (error) {
             console.error('Lỗi khi xóa user:', error);
             throw error;
         }
     }
+    
+    
+    
 
     // Phương thức để reset mật khẩu của user trong cơ sở dữ liệu
     static async resetPassword(id, newPassword) {
@@ -93,15 +103,30 @@ class User {
             throw error;
         }
     }
-    // static async getUserByID(id) {
-    //     try {
-    //         const [rows] = await connection.promise().query('SELECT * FROM user WHERE id = ?', [id]);
-    //         return rows.length > 0 ? rows[0] : null; // Trả về dòng dữ liệu đầu tiên nếu tồn tại email, ngược lại trả về null
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
-    
+    static async getUserByID(id) {
+        try {
+            const [rows] = await connection.promise().query('SELECT * FROM user WHERE id = ?', [id]);
+            return rows.length > 0 ? rows[0] : null; // Trả về dòng dữ liệu đầu tiên nếu tồn tại email, ngược lại trả về null
+        } catch (error) {
+            throw error;
+        }
+    }
+    static async editUser(userId, userData) {
+        try {
+            const { fullname, email, phone_number, address, role_id } = userData;
+            // Tạo câu lệnh SQL để cập nhật thông tin người dùng
+            const sql = `
+                UPDATE user 
+                SET fullname = ?, email = ?, phone_number = ?, address = ?, role_id = ?
+                WHERE id = ?`;
+            // Thực hiện câu lệnh SQL
+            const [result] = await connection.promise().query(sql, [fullname, email, phone_number, address, role_id, userId]);
+            return result.affectedRows; // Trả về số lượng hàng đã được cập nhật
+        } catch (error) {
+            console.error('Lỗi khi chỉnh sửa người dùng:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = User;

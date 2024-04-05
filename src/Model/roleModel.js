@@ -36,13 +36,18 @@ class Role {
     }
     static async findNameRole(roleId){
         try {
-            const [result]= await connection.promise().query('SELECT Name FROM role WHERE id = ?', [roleId]);
-            return result;
+            const [rows] = await connection.promise().query('SELECT name FROM role WHERE id = ?', [roleId]);
+            if (rows.length > 0) {
+                return rows[0].name; // Trả về giá trị của vai trò từ dòng kết quả truy vấn SQL
+            } else {
+                throw new Error('Không tìm thấy vai trò');
+            }
         } catch(error) {
             console.error('Lỗi khi tìm kiếm role:', error);
             throw error;
         }
     }
+    
     
 }
 

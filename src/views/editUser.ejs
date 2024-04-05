@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Thông Tin Người Dùng</title>
+    <!-- Thêm các thư viện CSS và JavaScript nếu cần -->
+</head>
+<body>
+    <h2>Chỉnh Sửa Thông Tin Người Dùng</h2>
+    <form action="/api/admin/account/edit/<%= user.id %>" method="POST">
+        <label for="fullname">Họ và Tên:</label>
+        <input type="text" id="fullname" name="fullname" value="<%= user.fullname %>" required><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<%= user.email %>" required><br>
+        
+        <label for="phone_number">Số Điện Thoại:</label>
+        <input type="tel" id="phone_number" name="phone_number" value="<%= user.phone_number %>" required><br>
+        
+        <label for="address">Địa Chỉ:</label>
+        <input type="text" id="address" name="address" value="<%= user.address %>" required><br>
+
+        <label for="role_id">Vai Trò:</label>
+        <select id="role_id" name="role_id" required>
+            <% roleName.forEach(role => { %>
+                <option value="<%= role.id %>" <%= role.id === user.role_id ? 'selected' : '' %>><%= role.name %></option>
+            <% }); %>
+        </select><br>
+
+        <button type="submit">Lưu</button>
+    </form>
+</body>
+</html>
