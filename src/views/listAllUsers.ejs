@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Người Dùng</title>
+    <!-- Thêm các thư viện CSS và JavaScript nếu cần -->
+</head>
+<body>
+    <h2>Danh Sách Người Dùng</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fullname</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.fullname %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone_number %></td>
+                    <td><%= user.address %></td>
+                    <!-- Hiển thị tên của vai trò tương ứng với role_id -->
+                    <td><%=JSON.stringify(roleNames[user.role_id])  %></td>
+                    <td>
+                        <!-- Nút để chuyển đến trang chỉnh sửa -->
+                        <a href="/admin/edit/<%= user.id %>">Chỉnh Sửa</a>
+                        <!-- Nút để xóa người dùng -->
+                        <form action="/api/admin/account/delete/<%= user.id %>" method="post" style="display: inline;">
+                            <button type="submit">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <!-- Nút để chuyển đến trang thêm người dùng -->
+    <a href="/admin/create">Thêm Người Dùng</a>
+</body>
+</html>

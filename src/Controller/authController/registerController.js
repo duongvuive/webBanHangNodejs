@@ -16,12 +16,10 @@ const register = async (req, res) => {
             const user = await User.registerUser(email, hashedPassword);
 
             // Kiểm tra loại yêu cầu của client
-            if (req.accepts('html')) {
-                // Nếu client yêu cầu HTML, chuyển hướng đến trang đăng nhập
-                res.redirect('/login'); // Thay '/login' bằng đường dẫn đến trang đăng nhập thực tế
-            } else {
-                // Nếu client yêu cầu JSON, trả về JSON
+            if (req.headers['content-type'] === 'application/json'){
                 res.status(201).json({ message: 'Đăng ký thành công'});
+            } else {
+                res.redirect('/login'); 
             }
         }
 
