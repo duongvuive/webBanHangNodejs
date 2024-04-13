@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const adminController= require('../../Controller/authController/adminUserController');
+const productController = require('../../Controller/authController/productController');
 const Role =require('../../Model/roleModel');
+const Category = require('../../Model/categoryModel');
+const Product = require('../../Model/productModel');
 const User=require('../../Model/userModel');
 const authorizeUser = require('../../middlewares/authorizeToken');
 router.get('/login',(req, res) => {
@@ -47,4 +50,27 @@ router.get('/admin/edit/:userId',authorizeUser(['Admin']), async (req, res) => {
     }
 });
 
+// product
+router.get('/products',productController.getAllProducts);
+router.get('/edit/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await Product.getProductById(id); // Lấy thông tin người dùng theo userId
+        // Truyền giá trị của roleName và thông tin người dùng vào view editUser.ejs
+        const categoryName = await Category.getAllCategories(); // Chờ cho đến khi Promise hoàn thành
+        res.render('editProduct.ejs', {  categoryName: categoryName,product: product });
+    } catch (error) {
+        console.error('Lỗi khi lấy danh sách vai trò hoặc thông tin người dùng:', error);
+        res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy dữ liệu' });
+    }
+});
+router.get('/create_product', async (req, res) => {
+    try {
+        const categoryName = await Category.getAllCategories(); // Chờ cho đến khi Promise hoàn thành
+        res.render('createProduct.ejs', { categoryName: categoryName }); // Truyền dữ liệu vào view
+    } catch (error) {
+        console.error('Lỗi khi lấy danh sách loại:', error);
+        res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy danh loại' });
+    }
+});
     module.exports = router;

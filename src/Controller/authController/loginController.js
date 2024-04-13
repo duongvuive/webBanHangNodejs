@@ -35,7 +35,7 @@ const loginController={
                 res.status(200).json({ message: 'Đăng nhập thành công'});
             }
             else{
-              res.redirect('/home');
+              res.redirect('/products');
             }
         } catch (error) {
             console.error('Lỗi khi đăng nhập:', error);
