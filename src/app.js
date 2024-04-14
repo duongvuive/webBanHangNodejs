@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT ; // Sử dụng mặc định là 3000 nếu PORT không được định nghĩa trong .env
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./Routes/api/userRoutes');
+const productRoutes = require('./Routes/api/productRoutes');
 const adminRoutes = require('./Routes/api/adminUserRoutes');
 const userWeb = require('./Routes/web/WebRoute');
 const configViewEngine = require('./config/viewEngie');
@@ -21,6 +22,8 @@ app.use(express.json());
 
 app.use('/api', authRoutes);
 app.use('/api', adminRoutes);
+// Sử dụng route của sản phẩm
+app.use('/api', productRoutes);
 
 // Khởi động máy chủ và lắng nghe cổng được chỉ định
 app.listen(port, () => {

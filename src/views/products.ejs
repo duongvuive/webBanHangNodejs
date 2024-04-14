@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+<body>
+    <h1>Products</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Description</th>
+                <th>Category_id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(function(product) { %>
+                <tr>
+                    <td><%= product.id %></td>
+                    <td><%= product.title %></td>
+                    <td><%= product.price %></td>
+                    <td><%= product.discount %></td>
+                    <td><%= product.description %></td>
+                    <td><%=JSON.stringify(categoryNames[product.category_id])  %></td>
+                    
+                    <td>
+                        <!-- Nút để chuyển đến trang chỉnh sửa -->
+                        <a href="/edit/<%= product.id %>">Chỉnh Sửa</a>
+                        <!-- Nút để xóa người dùng -->
+                        <form action="/api/products/delete/<%= product.id %>" method="POST" style="display: inline;">
+                            <button type="submit">Xóa</button>
+                        </form>
+                        
+                        <!-- <form action="/api/gio-hang/add/<%= product.id %>" method="POST" style="display: inline;">
+                            <button type="submit">Add Cart</button>
+                        </form> -->
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <!-- Nút để chuyển đến trang thêm người dùng -->
+    <a href="/create_product">Thêm Sản Phẩm Mới</a>
+</body>
+</html>

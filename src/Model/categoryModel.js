@@ -26,6 +26,21 @@ class Category {
             throw error;
         }
     }
+
+
+    static async findNameCategory(categoryId){
+        try {
+            const [rows] = await connection.promise().query('SELECT name FROM category WHERE id = ?', [categoryId]);
+            if (rows.length > 0) {
+                return rows[0].name; // Trả về giá trị của vai trò từ dòng kết quả truy vấn SQL
+            } else {
+                throw new Error('Không tìm thấy vai trò');
+            }
+        } catch(error) {
+            console.error('Lỗi khi tìm kiếm role:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = Category;
