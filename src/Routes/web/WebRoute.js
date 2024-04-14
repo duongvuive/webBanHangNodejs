@@ -13,7 +13,7 @@ router.get('/login',(req, res) => {
 router.get('/register',(req,res)=>{
         res.render('registerView.ejs');
     } );
-router.get('/home',(req, res) => {
+router.get('/home',authorizeUser(['client']),(req, res) => {
         res.render('home.ejs');
 });
 router.get('/forgotPassword',(req, res) => {
@@ -51,8 +51,8 @@ router.get('/admin/edit/:userId',authorizeUser(['Admin']), async (req, res) => {
 });
 
 // product
-router.get('/products',productController.getAllProducts);
-router.get('/edit/:id', async (req, res) => {
+router.get('/products',authorizeUser(['Admin']),productController.getAllProducts);
+router.get('/edit/:id',authorizeUser(['Admin']), async (req, res) => {
     try {
         const { id } = req.params;
         const product = await Product.getProductById(id); // Lấy thông tin người dùng theo userId
@@ -61,10 +61,10 @@ router.get('/edit/:id', async (req, res) => {
         res.render('editProduct.ejs', {  categoryName: categoryName,product: product });
     } catch (error) {
         console.error('Lỗi khi lấy danh sách vai trò hoặc thông tin người dùng:', error);
-        res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy dữ liệu' });
+        res.status(500).j.son({ error: 'Đã xảy ra lỗi khi lấy dữ liệu' });
     }
 });
-router.get('/create_product', async (req, res) => {
+router.get('/create_product',authorizeUser(['Admin']), async (req, res) => {
     try {
         const categoryName = await Category.getAllCategories(); // Chờ cho đến khi Promise hoàn thành
         res.render('createProduct.ejs', { categoryName: categoryName }); // Truyền dữ liệu vào view
