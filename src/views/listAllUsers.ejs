@@ -61,10 +61,44 @@
         .actions a:hover, .actions button:hover {
             background-color: #0056b3;
         }
+        nav {
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
     <h2>Danh Sách Người Dùng</h2>
+    <nav>
+        <ul>
+            <li><a href="/products">PRODUCT</a></li>
+            <li><a href="/api/logout">Đăng Xuất</a></li>
+        </ul>
+    </nav>
     <div style="text-align: center;">
         <a href="/admin/create" style="margin-bottom: 20px; display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 4px; text-decoration: none;">Thêm Người Dùng</a>
     </div>
@@ -72,12 +106,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Fullname</th>
+                <th>Họ Tên</th>
                 <th>Email</th>
-                <th>Phone Number</th>
-                <th>Address</th>
-                <th>Role</th>
-                <th>Actions</th>
+                <th>Số Điện Thoại</th>
+                <th>Địa Chỉ</th>
+                <th>Chức Vụ</th>
+                <th>Chức Năng</th>
             </tr>
         </thead>
         <tbody>

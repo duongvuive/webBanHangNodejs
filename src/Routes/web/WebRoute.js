@@ -13,9 +13,9 @@ router.get('/login',(req, res) => {
 router.get('/register',(req,res)=>{
         res.render('registerView.ejs');
     } );
-router.get('/home',authorizeUser(['client']),(req, res) => {
-        res.render('home.ejs');
-});
+// router.get('/home',authorizeUser(['client']),(req, res) => {
+//         res.render('home.ejs');
+// });
 router.get('/forgotPassword',(req, res) => {
     res.render('forgotPassword.ejs');
 });
@@ -71,6 +71,20 @@ router.get('/create_product',authorizeUser(['Admin']), async (req, res) => {
     } catch (error) {
         console.error('Lỗi khi lấy danh sách loại:', error);
         res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy danh loại' });
+    }
+});
+router.get('/home',authorizeUser(['client']),async (req, res) => {
+    try {
+        const homes = await Product.getAllProducts();
+        const categoryNames = {};
+        
+        for (const homeView of homes) {
+            const categoryName = await Category.findNameCategory(homeView.category_id);
+            categoryNames[homeView.category_id] = categoryName;
+        }   
+        res.render('home.ejs', { products: homes , categoryNames: categoryNames});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
     module.exports = router;

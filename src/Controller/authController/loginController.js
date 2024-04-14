@@ -26,7 +26,7 @@ const loginController={
             if (!isPasswordMatch) {
                 return res.status(401).json({ error: 'Mật khẩu không chính xác' });
             }
-    
+            
             // Tạo JWT token
             const token = jwt.sign({ userId: user.id, role: role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ExpiresIn });
             console.log('json web token:', token);
@@ -37,7 +37,7 @@ const loginController={
             else{
                 if (role === 'Admin') {
                     res.redirect('/admin');
-                } if (role === 'client'){
+                } else {
                     res.redirect('/home');
                 }
         
@@ -106,6 +106,13 @@ const loginController={
             console.error('Lỗi:', error);
             ResHelper.RenderRes(res, false, error.message);
         }
+    },
+
+    logout: async (req, res) => {
+        // Xóa JWT token hoặc xử lý logic đăng xuất khỏi hệ thống
+        // Ví dụ: Xóa cookie chứa JWT token
+        res.clearCookie('jwt');
+        res.redirect('/login'); // Chuyển hướng đến trang đăng nhập sau khi đăng xuất
     }
 };
 
