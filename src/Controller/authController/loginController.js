@@ -35,7 +35,12 @@ const loginController={
                 res.status(200).json({ message: 'Đăng nhập thành công'});
             }
             else{
-              res.redirect('/products');
+                if (role === 'Admin') {
+                    res.redirect('/admin');
+                } else {
+                    res.redirect('/products');
+                }
+        
             }
         } catch (error) {
             console.error('Lỗi khi đăng nhập:', error);
