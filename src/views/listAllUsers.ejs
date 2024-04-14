@@ -4,10 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh Sách Người Dùng</title>
-    <!-- Thêm các thư viện CSS và JavaScript nếu cần -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #333;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td:last-child {
+            white-space: nowrap;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        .actions a, .actions button {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .actions a:hover, .actions button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h2>Danh Sách Người Dùng</h2>
+    <div style="text-align: center;">
+        <a href="/admin/create" style="margin-bottom: 20px; display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 4px; text-decoration: none;">Thêm Người Dùng</a>
+    </div>
     <table border="1">
         <thead>
             <tr>
@@ -28,12 +88,9 @@
                     <td><%= user.email %></td>
                     <td><%= user.phone_number %></td>
                     <td><%= user.address %></td>
-                    <!-- Hiển thị tên của vai trò tương ứng với role_id -->
-                    <td><%=JSON.stringify(roleNames[user.role_id])  %></td>
-                    <td>
-                        <!-- Nút để chuyển đến trang chỉnh sửa -->
+                    <td><%= JSON.stringify(roleNames[user.role_id]) %></td>
+                    <td class="actions">
                         <a href="/admin/edit/<%= user.id %>">Chỉnh Sửa</a>
-                        <!-- Nút để xóa người dùng -->
                         <form action="/api/admin/account/delete/<%= user.id %>" method="post" style="display: inline;">
                             <button type="submit">Xóa</button>
                         </form>
@@ -42,7 +99,5 @@
             <% }); %>
         </tbody>
     </table>
-    <!-- Nút để chuyển đến trang thêm người dùng -->
-    <a href="/admin/create">Thêm Người Dùng</a>
 </body>
 </html>

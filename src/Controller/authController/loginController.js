@@ -38,7 +38,7 @@ const loginController={
                 if (role === 'Admin') {
                     res.redirect('/admin');
                 } else {
-                    res.redirect('/products');
+                    res.redirect('/home');
                 }
         
             }

@@ -4,31 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Sản Phẩm Mới</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h2>Thêm Sản Phẩm Mới</h2>
     <form action="/api/createproduct" method="POST">
+        <label for="title">Tên Hàng Hóa:</label>
+        <input type="text" id="title" name="title" required>
 
-        <label for="title">Ten Hang Hoa: </label>
-        <input type="text" id="title" name="title" required><br>
+        <label for="price">Giá:</label>
+        <input type="text" id="price" name="price" required>
 
-        <label for="price">Gia: </label>
-        <input type="text" id="price" name="price" required><br>
+        <label for="discount">Giảm Giá:</label>
+        <input type="text" id="discount" name="discount" required>
 
-        <label for="discount">Giam Gia:</label>
-        <input type="text" id="discount" name="discount" required><br>
+        <label for="description">Mô Tả:</label>
+        <input type="text" id="description" name="description" required>
 
-        <label for="description">Mo Ta:</label>
-        <input type="text" id="description" name="description" required><br>
-
-        <label for="category_id">Loai San Pham:</label>
-        <select id="text" name="category_id" required>
+        <label for="category_id">Loại Sản Phẩm:</label>
+        <select id="category_id" name="category_id" required>
             <% categoryName.forEach(category => { %>
                 <option value="<%= category.id %>"><%= category.name %></option>
             <% }); %>
-        </select><br>
+        </select>
 
-        <button type="submit">Thêm Sản Phẩm: </button>
+        <button type="submit">Thêm Sản Phẩm</button>
     </form>
 </body>
 </html>
